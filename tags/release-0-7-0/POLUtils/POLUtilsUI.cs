@@ -1,0 +1,131 @@
+// $Id$
+
+using System;
+using System.Drawing;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Forms;
+
+using PlayOnline.Core;
+
+namespace POLUtils {
+
+  public partial class POLUtilsUI : Form {
+
+    public POLUtilsUI() {
+      this.InitializeComponent();
+      this.Icon = Icons.POLViewer;
+      {
+      Version V = Assembly.GetExecutingAssembly().GetName().Version;
+	this.Text += String.Format(" {0}.{1}.{2}", V.Major, V.Minor, V.Build);
+      }
+      this.cmbCultures.Items.AddRange(POLUtils.AvailableCultures.ToArray());
+      this.cmbCultures.SelectedItem = CultureChoice.Current;
+      if (this.cmbCultures.Items.Count < 2)
+	this.cmbCultures.Enabled = false;
+      this.Show();
+      this.UpdateSelectedRegion();
+      // "Engrish Onry" is only of use if
+      //  1) a JP POL client is installed, and
+      //  2) the JP version of FFXI is installed.
+      if ((POL.AvailableRegions & POL.Region.Japan) == 0 || !POL.IsAppInstalled(AppID.FFXI, POL.Region.Japan))
+	this.btnFFXIEngrishOnry.Enabled = false;
+    }
+
+    private void UpdateSelectedRegion() {
+      this.txtSelectedRegion.Text      = new NamedEnum(POL.SelectedRegion).Name;
+      this.btnChooseRegion.Enabled     = POL.MultipleRegionsAvailable;
+      this.btnFFXIConfigEditor.Enabled = POL.IsAppInstalled(AppID.FFXI);
+      this.btnFFXIDataBrowser.Enabled  = POL.IsAppInstalled(AppID.FFXI);
+      this.btnFFXIMacroManager.Enabled = POL.IsAppInstalled(AppID.FFXI);
+      this.btnTetraViewer.Enabled      = POL.IsAppInstalled(AppID.TetraMaster);
+    }
+
+    #region Language Selection Events
+
+    private void cmbCultures_SelectedIndexChanged(object sender, System.EventArgs e) {
+      if (!this.Visible || this.cmbCultures.SelectedItem == null)
+	return;
+    CultureChoice CC = this.cmbCultures.SelectedItem as CultureChoice;
+      if (CC != null && CC.Name != CultureChoice.Current.Name) {
+	CultureChoice.Current = CC;
+	// Need to close and reopen the form to activate the changes
+	POLUtils.KeepGoing = true;
+	this.Close();
+      }
+    }
+
+    #endregion
+
+    #region Button Events
+
+    private void btnChooseRegion_Click(object sender, System.EventArgs e) {
+      POL.ChooseRegion(this);
+      this.UpdateSelectedRegion();
+    }
+
+    private void btnAudioManager_Click(object sender, System.EventArgs e) {
+      this.Hide();
+      using (Form Utility = new PlayOnline.Utils.AudioManager.MainWindow())
+	Utility.ShowDialog(this);
+      this.Show();
+      this.Activate();
+    }
+
+    private void btnFFXIConfigEditor_Click(object sender, System.EventArgs e) {
+      this.Hide();
+      using (Form Utility = new PlayOnline.FFXI.Utils.ConfigEditor.MainWindow())
+	Utility.ShowDialog(this);
+      this.Show();
+      this.Activate();
+    }
+
+    private void btnFFXIDataBrowser_Click(object sender, System.EventArgs e) {
+      this.Hide();
+      using (Form Utility = new PlayOnline.FFXI.Utils.DataBrowser.MainWindow())
+	Utility.ShowDialog(this);
+      this.Show();
+      this.Activate();
+    }
+
+    private void btnFFXIEngrishOnry_Click(object sender, EventArgs e) {
+      this.Hide();
+      using (Form Utility = new PlayOnline.FFXI.Utils.EngrishOnry.MainWindow())
+	Utility.ShowDialog(this);
+      this.Show();
+      this.Activate();
+    }
+
+    private void btnFFXIItemComparison_Click(object sender, System.EventArgs e) {
+      this.Hide();
+      using (Form Utility = new PlayOnline.FFXI.Utils.ItemComparison.MainWindow())
+	Utility.ShowDialog(this);
+      this.Show();
+      this.Activate();
+    }
+
+    private void btnFFXIMacroManager_Click(object sender, System.EventArgs e) {
+      this.Hide();
+      using (Form Utility = new PlayOnline.FFXI.Utils.MacroManager.MainWindow())
+	Utility.ShowDialog(this);
+      this.Show();
+      this.Activate();
+    }
+
+    private void btnTetraViewer_Click(object sender, System.EventArgs e) {
+      this.Hide();
+      using (Form Utility = new PlayOnline.Utils.TetraViewer.MainWindow())
+	Utility.ShowDialog(this);
+      this.Show();
+      this.Activate();
+    }
+
+    #endregion
+
+  }
+
+}
