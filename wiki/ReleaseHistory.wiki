@@ -1,6 +1,11 @@
 #summary The POLUtils Release History.
 #labels Featured
 
+== POLUtils 0.9.9 - October 3rd, 2010 ==
+  * Added the current Spells+Abilities string table to the data browser (String Tables>Common).
+  * Restructured the area-related menus of the data browser to produce shorter lists, and added the Abyssea areas.
+  * Development swithed to VS2008 (should not produce user-visible changes, since we still target .NET v2.0)
+
 == POLUtils 0.9.8 - September 11th, 2010 ==
   * Fixed loading of the armor DAT (S/E prepended a block of 1024 items to it).
   * Adjusted item comparison to deal with the comparison between the new armor DAT and older exports.
