@@ -1,6 +1,9 @@
 #summary The POLUtils Release History.
 #labels Featured
 
+== POLUtils 0.9.9.1 - October 5th, 2010 ==
+  * Bugfix release - XML exporting was messed up in the data browser
+
 == POLUtils 0.9.9 - October 3rd, 2010 ==
   * Added the current Spells+Abilities string table to the data browser (String Tables>Common).
   * Restructured the area-related menus of the data browser to produce shorter lists, and added the Abyssea areas.
