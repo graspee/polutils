@@ -1,6 +1,14 @@
 #summary The POLUtils Release History.
 #labels Featured
 
+== POLUtils 0.9.9.2 - July 3rd, 2012 ==
+  * Added Vouchers and Slip
+  * Enabled file table to see folders beyond 255, ROM# beyond 9
+  * Updated ROMFilemappings to cover Mini-Expansion, Heroes of Abyssea, Voidwatch-Finale, Legion
+  * Updated decoding of spell+abil common files for the changes made in the May 15th, 2012 patch
+  * Added new files to known data in MassExtractor
+  * Added Test Client Data Browser Support
+
 == POLUtils 0.9.9.1 - October 5th, 2010 ==
   * Bugfix release - XML exporting was messed up in the data browser
 
